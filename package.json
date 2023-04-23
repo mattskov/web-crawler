@@ -1,0 +1,24 @@
+{
+  "name": "web-crawler",
+  "version": "1.0.0",
+  "description": "custom web crawler",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "poststart": "open -e reports.csv",
+    "try": "node main-1.js",
+    "posttry": "open -e reports.csv",
+    "report": "open -e reports.csv",
+    "clear": "rm reports.csv",
+    "test": "jest"
+  },
+  "author": "Matthew Skovranek/mattjskov@gmail.com",
+  "license": "none",
+  "devDependencies": {
+    "jest": "^29.5.0"
+  },
+  "dependencies": {
+    "jsdom": "^21.1.1",
+    "node-fetch": "^2.6.9"
+  }
+}
