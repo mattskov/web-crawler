@@ -7,6 +7,7 @@ const fetch      = require('node-fetch');
 
 // return uniform URL str
 function normalizeURL(currentURL) {
+  // 'x' used to conserve line length
   const x = new URL(currentURL);
 
   //hostname + pathname + remove one trailing '/' if present
