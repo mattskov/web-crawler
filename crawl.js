@@ -20,45 +20,45 @@ const isAbsoluteURL = new RegExp('^(?:[a-z+]+:)?//', 'i');
 
 // return arr of URLs from html
 function getURLsFromHTML(htmlBody, baseURL) {
-	// parse html string
+  // parse html string
   const doc = new JSDOM(htmlBody).window.document;
   const aArr = doc.querySelectorAll('a');
   const result = [];
 
   for (const a of aArr) {
     if (a.hasAttribute('href')) {
-    	let strURL = a.getAttribute('href');
+      let strURL = a.getAttribute('href');
 
-    	// if relative URL, turn to absolute URL 
-    	if (!isAbsoluteURL.test(strURL)) strURL = new URL(baseURL).origin + strURL;
+      // if relative URL, turn to absolute URL 
+      if (!isAbsoluteURL.test(strURL)) strURL = new URL(baseURL).origin + strURL;
 
-    	result.push(strURL);
+      result.push(strURL);
     };
   };
-	return result;
+  return result;
 };
 
 
 // compare URL domains
 function isNotSameDomain(baseURL, currentURL) {
-	const baseDomain = new URL(baseURL);
-	const currentDomain = new URL(currentURL);
-	return baseDomain.hostname !== currentDomain.hostname;
+  const baseDomain = new URL(baseURL);
+  const currentDomain = new URL(currentURL);
+  return baseDomain.hostname !== currentDomain.hostname;
 };
 
 
 // fetch page HTML as str
 async function fetchHTML(URL) {
   try {
-		const res = await fetch(URL);
-		if (res.status > 399) throw res.statusText;
-		if (res.headers.get('content-type').slice(0, 9) !== 'text/html') {
-			throw `Error: content not html, URL: ${res.headers.get('content-type')}`
-		};
+    const res = await fetch(URL);
+    if (res.status > 399) throw res.statusText;
+    if (res.headers.get('content-type').slice(0, 9) !== 'text/html') {
+      throw `Error: content not html, URL: ${res.headers.get('content-type')}`
+    };
     //console.log('fetching HTML: ' + URL);
-	  return res.text();
+    return res.text();
   } catch(err) {
-  	console.log(`Catch: ${err}`);
+    console.log(`Catch: ${err}`);
   };
 };
 
@@ -100,8 +100,8 @@ async function crawlPage(baseURL, currentURL=baseURL, pages={}) {
     // use just URL's origin and pathname without trailing '/'
     let normURL = normalizeURL(URL);
 
-	  // if links to different site
-	  if (isNotSameDomain(baseURL, URL)) {
+    // if links to different site
+    if (isNotSameDomain(baseURL, URL)) {
       pages[normalizedURL].push(normURL);
       continue;
     };
@@ -109,8 +109,8 @@ async function crawlPage(baseURL, currentURL=baseURL, pages={}) {
     // add link to node
     pages[normalizedURL].push(normURL);
 
-  	// if visited, just tally, else crawl
-	  if (normURL in pages) continue;
+    // if visited, just tally, else crawl
+    if (normURL in pages) continue;
 
     // recursion
     pagesArr.push(crawlPage(baseURL, URL, pages));
