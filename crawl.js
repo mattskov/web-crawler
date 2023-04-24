@@ -43,6 +43,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
 function isNotSameDomain(baseURL, currentURL) {
   const baseDomain = new URL(baseURL);
   const currentDomain = new URL(currentURL);
+  
   return baseDomain.hostname !== currentDomain.hostname;
 };
 
@@ -51,11 +52,15 @@ function isNotSameDomain(baseURL, currentURL) {
 async function fetchHTML(URL) {
   try {
     const res = await fetch(URL);
+    
     if (res.status > 399) throw res.statusText;
+    
     if (res.headers.get('content-type').slice(0, 9) !== 'text/html') {
       throw `Error: content not html, URL: ${res.headers.get('content-type')}`
     };
-    //console.log('fetching HTML: ' + URL);
+    
+    console.log('fetching HTML: ' + URL);
+    
     return res.text();
   } catch(err) {
     console.log(`Catch: ${err}`);
@@ -67,6 +72,7 @@ async function fetchHTML(URL) {
 async function aggregatePages(pages, pagesArr) {
   for (const awaitPages of pagesArr) {
     const returnedPages = await awaitPages;
+    
     for (const k of Object.keys(returnedPages)) {
       if (!(k in pages)) pages[k] = returnedPages[k];
     };
