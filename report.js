@@ -6,26 +6,25 @@ function countNodeLinks(pages) {
   const nodes = Object.keys(pages);
   const links = Object.values(pages).flat();
   const result = {
-  	'internal links': 0,
-  	'external links': 0
+    'internal links': 0,
+    'external links': 0
   };
 
   nodes.forEach(node => result[node] = 0);
 
   links.forEach(link => {
-  	if (nodes.includes(link)) {
-  		result[link]++;
-  		result['internal links']++;
-  	} else {
+    if (nodes.includes(link)) {
+      result[link]++;
+      result['internal links']++;
+    } else {
       result['external links']++;
       if (link in result) {
       	result[link]++;
-  	  } else {
-  	  	result[link] = 1;
-  	  };
-  	};
+      } else {
+        result[link] = 1;
+      };
+    };
   });
-
   return result;
 };
 
@@ -33,42 +32,42 @@ function countNodeLinks(pages) {
 // obj to psuedo map sorted by descending value then alphabetical keys
 function sortPages(pages) {
   const sortedPagesArr = Object.keys(pages)
-      .sort()
-      .sort((a,b) => pages[b] - pages[a])
-      .reduce((arr=[], k) => {
-        arr.push([k, pages[k]]);
-        return arr;
-      }, []);
+    .sort()
+    .sort((a,b) => pages[b] - pages[a])
+    .reduce((arr=[], k) => {
+      arr.push([k, pages[k]]);
+      return arr;
+    }, []);
   return sortedPagesArr;
 };
 
 
 // convert num to formated string
 function formatNum(num) {
-	let prefixStr = '';
-	if (num > 999) {
-		return num;
-	} else if (num > 99) {
-	  prefixStr = ' ';
-	} else if (num > 9) {
-	  prefixStr = '  ';
-	} else {
-		prefixStr = '   ';
-	};
+  let prefixStr = '';
+  if (num > 999) {
+    return num;
+  } else if (num > 99) {
+    prefixStr = ' ';
+  } else if (num > 9) {
+    prefixStr = '  ';
+  } else {
+    prefixStr = '   ';
+  };
   return prefixStr + num;
 };
 
 
 // log report to CSV file
 function saveReport(reportStr, file_path='./reports.csv') {
-	console.log('\nSaving report...');
-    fs.appendFile(file_path, reportStr, (err) => {
-        if (err) {
-            console.error(`Write error: ${err}`);
-            return;
-        };
-        console.log(`Report saved at file path: ${file_path}`);
-    });
+  console.log('\nSaving report...');
+  fs.appendFile(file_path, reportStr, (err) => {
+  if (err) {
+    console.error(`Write error: ${err}`);
+    return;
+  };
+  console.log(`Report saved at file path: ${file_path}`);
+  });
 };
 
 
@@ -93,6 +92,6 @@ function reportPages(pages) {
 
 module.exports = {
   sortPages,
-	saveReport,
+  saveReport,
   reportPages
 };
