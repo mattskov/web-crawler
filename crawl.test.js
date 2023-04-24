@@ -2,20 +2,20 @@ const { test, expect }                   = require('@jest/globals');
 const { normalizeURL, getURLsFromHTML }  = require('./crawl.js');
 
 describe('crawl.js: normalizeURL(baseURL, currentURL)', () => {
-	const expectedURL = 'www.google.com/imghp';
+  const expectedURL = 'www.google.com/imghp';
 
-	test('https://www.google.com/imghp?hl=en&ogbl', () => {
-	  expect(normalizeURL('https://www.Google.Com/imghp?hl=en&ogbl')).toBe(expectedURL);
-	});
-	test('https://www.Google.com/imghp', () => {
-	  expect(normalizeURL('https://www.Google.com/imghp')).toBe(expectedURL);
-	});
-	test('https://www.google.com/imghp/', () => {
-	  expect(normalizeURL('https://www.google.com/imghp/')).toBe(expectedURL);
-	});
-	test('http://www.google.com/imghp?hl=en&ogbl', () => {
-	  expect(normalizeURL('http://www.google.com/imghp?hl=en&ogbl')).toBe(expectedURL);
-	});
+  test('https://www.google.com/imghp?hl=en&ogbl', () => {
+    expect(normalizeURL('https://www.Google.Com/imghp?hl=en&ogbl')).toBe(expectedURL);
+  });
+  test('https://www.Google.com/imghp', () => {
+    expect(normalizeURL('https://www.Google.com/imghp')).toBe(expectedURL);
+  });
+  test('https://www.google.com/imghp/', () => {
+    expect(normalizeURL('https://www.google.com/imghp/')).toBe(expectedURL);
+  });
+  test('http://www.google.com/imghp?hl=en&ogbl', () => {
+    expect(normalizeURL('http://www.google.com/imghp?hl=en&ogbl')).toBe(expectedURL);
+  });
 });
 
 describe('crawl.js: getURLsFromHTML(htmlBody, baseURL)', () => {
@@ -24,6 +24,6 @@ describe('crawl.js: getURLsFromHTML(htmlBody, baseURL)', () => {
   const expectedURLArr = ['https://www.google.com', 'https://www.google.com', 'https://www.google.com/', 'https://www.google.com/imghp?hl=en&ogbl'];
 
   test('tests receivedHTML', () => {
-  	expect(getURLsFromHTML(receivedHTML, receivedURL)).toStrictEqual(expectedURLArr);
+    expect(getURLsFromHTML(receivedHTML, receivedURL)).toStrictEqual(expectedURLArr);
   });
 });
